@@ -14,6 +14,8 @@ namespace ZD1
       static void DeleteDir(string Path)
       {
          if (Directory.Exists(Path))
+         {
+
             try
             {
                string[] dirs = Directory.GetDirectories(Path);
@@ -48,6 +50,8 @@ namespace ZD1
             {
                Console.WriteLine(ex.Message);
             }
+         }
+
       }
    }
 }
