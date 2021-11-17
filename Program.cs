@@ -23,25 +23,25 @@ namespace ZD1
                foreach (string d in dirs)
                {
                   DirectoryInfo NowDir = new DirectoryInfo(d);
-                  DeleteDir(d);
+
+                  if (DateTime.Now.Subtract(NowDir.LastWriteTime) > TimeSpan.FromMinutes(30))
+                     NowDir.Delete(true);
+                  else
+                     DeleteDir(d);
 
 
                   string[] files = Directory.GetFiles(Path);
 
                   foreach (string s in files)
                   {
-                     DirectoryInfo NowFile = new DirectoryInfo(s);
+                     FileInfo NowFile = new FileInfo(s);
 
                      if (DateTime.Now.Subtract(NowFile.LastWriteTime) > TimeSpan.FromMinutes(30))
                      {
-                        NowDir.Delete(true);
+                        NowFile.Delete();
                      }
                   }
 
-                  if (DateTime.Now.Subtract(NowDir.LastWriteTime) > TimeSpan.FromMinutes(30))
-                  {
-                     NowDir.Delete(true);
-                  }
                }
 
             }
