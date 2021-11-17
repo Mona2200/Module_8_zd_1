@@ -26,9 +26,8 @@ namespace ZD1
 
                   if (DateTime.Now.Subtract(NowDir.LastWriteTime) > TimeSpan.FromMinutes(30))
                      NowDir.Delete(true);
-                  else
-                     DeleteDir(d);
 
+               }
 
                   string[] files = Directory.GetFiles(Path);
 
@@ -37,13 +36,8 @@ namespace ZD1
                      FileInfo NowFile = new FileInfo(s);
 
                      if (DateTime.Now.Subtract(NowFile.LastWriteTime) > TimeSpan.FromMinutes(30))
-                     {
                         NowFile.Delete();
-                     }
                   }
-
-               }
-
             }
 
             catch (Exception ex)
