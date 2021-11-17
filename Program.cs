@@ -13,41 +13,41 @@ namespace ZD1
 
       static void DeleteDir(string Path)
       {
-
-         try
-         {
-            string[] dirs = Directory.GetDirectories(Path);
-
-            foreach (string d in dirs)
+         if (Directory.Exists(Path))
+            try
             {
-               DirectoryInfo NowDir = new DirectoryInfo(d);
-               DeleteDir(d);
+               string[] dirs = Directory.GetDirectories(Path);
 
-
-               string[] files = Directory.GetFiles(Path);
-
-               foreach (string s in files)
+               foreach (string d in dirs)
                {
-                  DirectoryInfo NowFile = new DirectoryInfo(s);
+                  DirectoryInfo NowDir = new DirectoryInfo(d);
+                  DeleteDir(d);
 
-                  if (DateTime.Now.Subtract(NowFile.LastWriteTime) > TimeSpan.FromMinutes(30))
+
+                  string[] files = Directory.GetFiles(Path);
+
+                  foreach (string s in files)
+                  {
+                     DirectoryInfo NowFile = new DirectoryInfo(s);
+
+                     if (DateTime.Now.Subtract(NowFile.LastWriteTime) > TimeSpan.FromMinutes(30))
+                     {
+                        NowDir.Delete(true);
+                     }
+                  }
+
+                  if (DateTime.Now.Subtract(NowDir.LastWriteTime) > TimeSpan.FromMinutes(30))
                   {
                      NowDir.Delete(true);
                   }
                }
 
-               if (DateTime.Now.Subtract(NowDir.LastWriteTime) > TimeSpan.FromMinutes(30))
-               {
-                  NowDir.Delete(true);
-               }
             }
 
-         }
-
-         catch (Exception ex)
-         {
-            Console.WriteLine(ex.Message);
-         }
+            catch (Exception ex)
+            {
+               Console.WriteLine(ex.Message);
+            }
       }
    }
 }
